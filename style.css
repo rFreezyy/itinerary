@@ -7,12 +7,11 @@ body {
     color: #333;
     display: flex;
     justify-content: center;
-    align-items: center;
-    height: 100vh;
-    overflow: hidden;
-    transition: background-color 0.3s ease; /* Smooth transition for dark mode */
+    align-items: flex-start; /* Allow scrolling to happen */
+    min-height: 100vh; /* Ensure body takes full height of the viewport */
+    overflow-y: auto; /* Enable scrolling when necessary */
+    transition: background-color 0.3s ease;
 }
-
 /* Dark Mode */
 body.dark-mode {
     background-color: #121212;
@@ -27,7 +26,8 @@ body.dark-mode {
     padding: 20px;
     border-radius: 15px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    transition: all 0.3s ease-in-out;
+    overflow: hidden; /* Ensure no overflow from the container */
+    flex: 1; /* Allow container to stretch */
 }
 
 /* Heading */
@@ -97,7 +97,7 @@ button:active {
 .weather-widget {
     position: fixed;
     top: 20px;
-    right: -300px;
+    right: -300px;  /* Initially hidden off-screen */
     width: 280px;
     padding: 15px;
     background-color: #333;
@@ -106,6 +106,7 @@ button:active {
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
     font-family: Arial, sans-serif;
     transition: right 0.5s ease-in-out;
+    z-index: 1000; /* Ensure it stays above other elements */
 }
 
 .weather-widget h3 {
@@ -202,4 +203,13 @@ ul {
 
 li {
     cursor: move;
+}
+
+.container {
+    overflow-y: auto;
+}
+
+/* Smooth transition on body height for scroll */
+html, body {
+    height: 100%;
 }
