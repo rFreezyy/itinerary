@@ -68,6 +68,7 @@ function getWeather() {
             `;
 
             document.getElementById('weatherWidget').innerHTML = weatherHTML;
+            document.getElementById('weatherWidget').style.right = '20px'; // Slide in to visible position
         })
         .catch(error => {
             console.error("Error fetching weather data:", error);
@@ -192,7 +193,8 @@ function updateActivityOrder(dayId) {
 }
 
 // Drag and drop reordering
-document.querySelectorAll('.activity-list').forEach(list => {
+let sortableLists = document.querySelectorAll('.activity-list');
+sortableLists.forEach(list => {
     new Sortable(list, {
         animation: 150,
         onEnd: function(evt) {
@@ -200,6 +202,20 @@ document.querySelectorAll('.activity-list').forEach(list => {
         }
     });
 });
+
+// Dropdown Menu Style Update (theme-aware)
+document.getElementById('activityFilter').addEventListener('change', function() {
+    const theme = document.body.classList.contains('dark-mode') ? 'dark' : 'light';
+    const selectElement = this;
+    if (theme === 'dark') {
+        selectElement.style.backgroundColor = '#333';
+        selectElement.style.color = '#fff';
+    } else {
+        selectElement.style.backgroundColor = '#fff';
+        selectElement.style.color = '#333';
+    }
+});
+
 
 
 
