@@ -12,12 +12,24 @@ body {
     overflow-y: auto; /* Enable scrolling when necessary */
     transition: background-color 0.3s ease;
 }
-/* Dark Mode */
-body.dark-mode {
-    background-color: #121212;
-    color: #e0e0e0;
-}
 
+#activityFilter {
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+    border-radius: 8px;
+    font-size: 16px;
+    background-color: #fff;
+    color: #333;
+    border: 2px solid #ccc;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+/* Dark Mode */
+body.dark-mode #activityFilter {
+    background-color: #444;
+    color: #fff;
+    border-color: #555;
+}
 /* Container Styling */
 .container {
     width: 90%;
