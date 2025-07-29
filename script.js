@@ -9,16 +9,33 @@ document.getElementById('themeToggle').addEventListener('click', function() {
     } else {
         sessionStorage.removeItem('darkMode');
     }
+
+    // Update the dropdown background color to match the theme
+    updateDropdownTheme();
 });
 
 // Check if dark mode was previously enabled and apply it
 if (sessionStorage.getItem('darkMode') === 'enabled') {
     document.body.classList.add('dark-mode');
+    updateDropdownTheme();
+}
+
+// Function to update the dropdown style based on the current theme
+function updateDropdownTheme() {
+    const theme = document.body.classList.contains('dark-mode') ? 'dark' : 'light';
+    const selectElement = document.getElementById('activityFilter');
+    if (theme === 'dark') {
+        selectElement.style.backgroundColor = '#333';
+        selectElement.style.color = '#fff';
+    } else {
+        selectElement.style.backgroundColor = '#fff';
+        selectElement.style.color = '#333';
+    }
 }
 
 // Weather Widget (fetches weather from OpenWeather)
 function getWeather() {
-    const apiKey = '2403c65e7a99e471d625cb15b5ca7a59';  // Replace with your OpenWeather API key
+    const apiKey = 'YOUR_API_KEY';  // Replace with your OpenWeather API key
     const weatherAPI = `https://api.openweathermap.org/data/2.5/onecall?lat=36.1699&lon=-115.1398&exclude=minutely&appid=${apiKey}&units=imperial`; // Use 'imperial' for Fahrenheit, 'metric' for Celsius
 
     fetch(weatherAPI)
@@ -68,7 +85,7 @@ function getWeather() {
             `;
 
             document.getElementById('weatherWidget').innerHTML = weatherHTML;
-            document.getElementById('weatherWidget').style.right = '20px'; // Slide in to visible position
+            document.getElementById('weatherWidget').style.right = '20px'; // Slide into view from the right side
         })
         .catch(error => {
             console.error("Error fetching weather data:", error);
@@ -202,6 +219,7 @@ sortableLists.forEach(list => {
         }
     });
 });
+
 
 // Dropdown Menu Style Update (theme-aware)
 document.getElementById('activityFilter').addEventListener('change', function() {
