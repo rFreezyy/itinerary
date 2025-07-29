@@ -6,98 +6,83 @@ body {
     background-color: #f8f8f8;
     color: #333;
     display: flex;
-    justify-content: center;
-    align-items: flex-start; /* Allow scrolling to happen */
-    min-height: 100vh; /* Ensure body takes full height of the viewport */
-    overflow-y: auto; /* Enable scrolling when necessary */
-    transition: background-color 0.3s ease; /* Smooth transition for dark mode */
+    height: 100vh;
+    overflow: hidden;
 }
 
-/* Dark Mode */
-body.dark-mode {
-    background-color: #121212;
-    color: #e0e0e0;
-}
-
-/* Container Styling */
+/* Container for Sidebar and Main Content */
 .container {
-    width: 90%;
-    max-width: 700px;
-    background-color: #fff;
+    display: flex;
+    width: 100%;
+}
+
+/* Sidebar for Day List */
+.sidebar {
+    width: 250px;
+    background-color: #333;
+    color: white;
     padding: 20px;
-    border-radius: 15px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    overflow: hidden; /* Ensure no overflow from the container */
-    flex: 1; /* Allow container to stretch */
+    height: 100vh;
+    overflow-y: auto;
 }
 
-/* Heading */
-h1 {
+.sidebar h2 {
     text-align: center;
-    font-size: 32px;
-    color: #333;
-    margin-bottom: 20px;
-}
-
-/* Countdown and Activity Sections */
-#countdown {
-    font-size: 18px;
-    color: #3b8d7d;
 }
 
 .day {
-    margin-bottom: 30px;
-    transition: all 0.3s ease-in-out;
+    margin-bottom: 20px;
 }
 
-/* Input and Buttons */
-input {
-    width: 100%;
-    padding: 12px;
-    margin-top: 10px;
-    border: 2px solid #ccc;
-    border-radius: 10px;
-    font-size: 16px;
-    transition: border-color 0.3s ease;
+.day-title {
+    color: #fff;
+    cursor: pointer;
+    margin: 0;
+    font-size: 1.2rem;
 }
 
-input:focus {
-    border-color: #3b8d7d;
-    outline: none;
+.day-content {
+    display: none;
+}
+
+.activity-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
 }
 
 button {
-    width: 100%;
-    padding: 15px;
-    background-color: #333;
-    color: #fff;
+    margin-top: 10px;
+    padding: 8px;
+    background-color: #28a745;
+    color: white;
     border: none;
-    border-radius: 8px;
+    border-radius: 5px;
     cursor: pointer;
-    font-size: 18px;
-    margin-top: 20px;
-    transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
 button:hover {
-    background-color: #444;
-    transform: scale(1.05);
+    background-color: #218838;
 }
 
-button:active {
-    transform: scale(1.02);
+/* Main Content for Map */
+.main-content {
+    flex: 1;
+    padding: 20px;
+    overflow: hidden;
 }
 
-/* Theme Toggle */
-#themeToggle {
-    background-color: #444;
-    margin-top: 10px;
+/* Map */
+#map {
+    width: 100%;
+    height: 500px;
 }
 
+/* Weather Widget */
 .weather-widget {
     position: fixed;
     top: 20px;
-    right: -300px; /* Initially hidden */
+    right: -300px;  /* Initially hidden */
     width: 280px;
     padding: 15px;
     background-color: #333;
@@ -107,6 +92,11 @@ button:active {
     font-family: Arial, sans-serif;
     transition: right 0.5s ease-in-out;
     z-index: 1000;
+}
+
+.weather-widget.show {
+    visibility: visible;
+    opacity: 1;
 }
 
 .weather-widget h3 {
@@ -136,6 +126,21 @@ button:active {
 
 .weather-widget .hourly .hour p, .weather-widget .daily .day p {
     font-size: 14px;
+}
+
+/* Drag-and-Drop Styles */
+.activity-list li {
+    padding: 12px;
+    background-color: #fff;
+    margin: 8px 0;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    cursor: move;
+    transition: background-color 0.3s ease;
+}
+
+.activity-list li:hover {
+    background-color: #f1f1f1;
 }
 
 /* Popup (Confirmation) */
@@ -175,36 +180,6 @@ button:active {
     background-color: #555;
 }
 
-/* Hover and Shadow Effects for Items */
-.activity-list li {
-    padding: 12px;
-    background-color: #f9f9f9;
-    margin: 8px 0;
-    border-radius: 10px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    transition: all 0.2s ease;
-}
-
-.activity-list li:hover {
-    background-color: #3b8d7d;
-    color: white;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-}
-
-.activity-list li.dragging {
-    opacity: 0.5;
-}
-
-/* Smooth Transition on Drag-and-Drop */
-ul {
-    list-style-type: none;
-    padding: 0;
-}
-
-li {
-    cursor: move;
-}
-
 /* Activity Dropdown Menu */
 #activityFilter {
     width: 100%;
@@ -224,3 +199,4 @@ body.dark-mode #activityFilter {
     color: #fff;
     border-color: #555;
 }
+
