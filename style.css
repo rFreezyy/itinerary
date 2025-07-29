@@ -1,147 +1,205 @@
+/* Basic Page Styling */
 body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
+    font-family: 'Arial', sans-serif;
     margin: 0;
-    padding: 20px;
+    padding: 0;
+    background-color: #f8f8f8;
     color: #333;
     display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    overflow: hidden;
+    transition: background-color 0.3s ease; /* Smooth transition for dark mode */
 }
 
-.container {
-    max-width: 600px;
-    margin: 0 auto;
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    flex: 1;
-}
-
-h1 {
-    text-align: center;
-    color: #333;
-}
-
-button {
-    padding: 10px;
-    margin-top: 10px;
-    background-color: #333;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    width: 100%;
-}
-
-button:hover {
-    background-color: #555;
-}
-
-#countdown {
-    font-size: 20px;
-    color: green;
-    font-weight: bold;
-}
-
-.day {
-    margin-bottom: 20px;
-}
-
-.day input {
-    width: 100%;
-    padding: 10px;
-    margin-top: 5px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-}
-
-#activityFilter {
-    width: 100%;
-    padding: 10px;
-    margin-top: 10px;
-}
-
-#themeToggle {
-    margin-top: 10px;
-    background-color: #444;
-}
-
-/* Dark Mode Styles */
-.dark-mode {
+/* Dark Mode */
+body.dark-mode {
     background-color: #121212;
     color: #e0e0e0;
 }
 
-.dark-mode .container {
+/* Container Styling */
+.container {
+    width: 90%;
+    max-width: 700px;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease-in-out;
+}
+
+/* Heading */
+h1 {
+    text-align: center;
+    font-size: 32px;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+/* Countdown and Activity Sections */
+#countdown {
+    font-size: 18px;
+    color: #3b8d7d;
+}
+
+.day {
+    margin-bottom: 30px;
+    transition: all 0.3s ease-in-out;
+}
+
+/* Input and Buttons */
+input {
+    width: 100%;
+    padding: 12px;
+    margin-top: 10px;
+    border: 2px solid #ccc;
+    border-radius: 10px;
+    font-size: 16px;
+    transition: border-color 0.3s ease;
+}
+
+input:focus {
+    border-color: #3b8d7d;
+    outline: none;
+}
+
+button {
+    width: 100%;
+    padding: 15px;
     background-color: #333;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 18px;
+    margin-top: 20px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
-.dark-mode button {
-    background-color: #555;
+button:hover {
+    background-color: #444;
+    transform: scale(1.05);
 }
 
-/* Weather Widget (to the right) */
+button:active {
+    transform: scale(1.02);
+}
+
+/* Theme Toggle */
+#themeToggle {
+    background-color: #444;
+    margin-top: 10px;
+}
+
+/* Weather Widget */
 .weather-widget {
     position: fixed;
     top: 20px;
-    right: 20px;
+    right: -300px;
     width: 280px;
     padding: 15px;
     background-color: #333;
     color: white;
-    border-radius: 10px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    border-radius: 15px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
     font-family: Arial, sans-serif;
+    transition: right 0.5s ease-in-out;
 }
 
 .weather-widget h3 {
-    font-size: 18px;
+    font-size: 20px;
     margin: 0;
+    color: #fff;
 }
 
 .weather-widget .temp {
-    font-size: 32px;
+    font-size: 36px;
     font-weight: bold;
+    margin-top: 15px;
 }
 
-.weather-widget .hourly {
-    margin-top: 20px;
-    display: flex;
-    justify-content: space-between;
-}
-
-.weather-widget .hourly .hour {
-    display: inline-block;
-    width: 40px;
-    text-align: center;
-    margin: 0 5px;
-}
-
-.weather-widget .hourly .hour img {
-    width: 24px;
-}
-
-.weather-widget .daily {
+.weather-widget .hourly, .weather-widget .daily {
     margin-top: 20px;
 }
 
-.weather-widget .daily .day {
+.weather-widget .hourly .hour, .weather-widget .daily .day {
     margin-bottom: 10px;
 }
 
-.weather-widget .daily .day img {
+.weather-widget .hourly .hour img, .weather-widget .daily .day img {
     width: 30px;
+    margin: 5px;
 }
 
-.weather-widget .daily .day p {
-    margin: 5px 0;
-}
-
-.weather-widget .daily .day strong {
+.weather-widget .hourly .hour p, .weather-widget .daily .day p {
     font-size: 14px;
 }
 
-.weather-widget .daily .day p:last-child {
-    font-size: 12px;
+/* Popup (Confirmation) */
+.popup {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: center;
 }
 
+.popup-content {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.popup-content button {
+    width: 45%;
+    margin: 10px 5%;
+    padding: 10px;
+    background-color: #333;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.popup-content button:hover {
+    background-color: #555;
+}
+
+/* Hover and Shadow Effects for Items */
+.activity-list li {
+    padding: 12px;
+    background-color: #f9f9f9;
+    margin: 8px 0;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: all 0.2s ease;
+}
+
+.activity-list li:hover {
+    background-color: #3b8d7d;
+    color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.activity-list li.dragging {
+    opacity: 0.5;
+}
+
+/* Smooth Transition on Drag-and-Drop */
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+li {
+    cursor: move;
+}
