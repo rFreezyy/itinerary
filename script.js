@@ -1,3 +1,8 @@
+// Dark Mode Toggle
+document.getElementById('themeToggle').addEventListener('click', function() {
+    document.body.classList.toggle('dark-mode');
+});
+
 // Weather Widget (fetches weather from OpenWeather)
 function getWeather() {
     const apiKey = 'YOUR_API_KEY';  // Replace with your OpenWeather API key
@@ -68,6 +73,7 @@ function resetItinerary() {
 function confirmReset() {
     localStorage.removeItem('itinerary'); // Remove itinerary from localStorage
     location.reload(); // Reload the page to reflect changes
+    closePopup(); // Close the popup after confirming
 }
 
 // Close the popup
@@ -171,5 +177,15 @@ function updateActivityOrder(dayId) {
     // Save the updated itinerary back to localStorage
     localStorage.setItem('itinerary', JSON.stringify(savedItinerary));
 }
+
+// Drag and drop reordering
+document.querySelectorAll('.activity-list').forEach(list => {
+    new Sortable(list, {
+        animation: 150,
+        onEnd: function(evt) {
+            updateActivityOrder(evt.from.id); // Save the new order after drag
+        }
+    });
+});
 
 
