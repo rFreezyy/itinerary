@@ -1,7 +1,20 @@
 // Dark Mode Toggle
 document.getElementById('themeToggle').addEventListener('click', function() {
+    // Toggle dark mode on the body element
     document.body.classList.toggle('dark-mode');
+    
+    // Save the dark mode state to sessionStorage to persist it across reloads
+    if (document.body.classList.contains('dark-mode')) {
+        sessionStorage.setItem('darkMode', 'enabled');
+    } else {
+        sessionStorage.removeItem('darkMode');
+    }
 });
+
+// Check if dark mode was previously enabled and apply it
+if (sessionStorage.getItem('darkMode') === 'enabled') {
+    document.body.classList.add('dark-mode');
+}
 
 // Weather Widget (fetches weather from OpenWeather)
 function getWeather() {
@@ -187,5 +200,6 @@ document.querySelectorAll('.activity-list').forEach(list => {
         }
     });
 });
+
 
 
