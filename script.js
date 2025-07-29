@@ -1,41 +1,78 @@
-// Dark Mode Toggle
-document.getElementById('themeToggle').addEventListener('click', function() {
-    // Toggle dark mode on the body element
-    document.body.classList.toggle('dark-mode');
-    
-    // Save the dark mode state to sessionStorage to persist it across reloads
-    if (document.body.classList.contains('dark-mode')) {
-        sessionStorage.setItem('darkMode', 'enabled');
-    } else {
-        sessionStorage.removeItem('darkMode');
-    }
-
-    // Update the dropdown background color to match the theme
-    updateDropdownTheme();
-});
-
-// Check if dark mode was previously enabled and apply it
-if (sessionStorage.getItem('darkMode') === 'enabled') {
-    document.body.classList.add('dark-mode');
-    updateDropdownTheme();
+// Initialize Google Map
+let map;
+function initMap() {
+    map = new google.maps.Map(document.getElementById("map"), {
+        center: { lat: 36.1699, lng: -115.1398 },  // Las Vegas Coordinates
+        zoom: 12,
+    });
 }
 
-// Function to update the dropdown style based on the current theme
-function updateDropdownTheme() {
-    const theme = document.body.classList.contains('dark-mode') ? 'dark' : 'light';
-    const selectElement = document.getElementById('activityFilter');
-    if (theme === 'dark') {
-        selectElement.style.backgroundColor = '#333';
-        selectElement.style.color = '#fff';
-    } else {
-        selectElement.style.backgroundColor = '#fff';
-        selectElement.style.color = '#333';
+// Function to add activities dynamically
+function addActivity(dayId) {
+    const activityList = document.getElementById(`activity-list-${dayId}`);
+    const activityName = prompt("Enter activity name:");
+
+    if (activityName) {
+        const li = document.createElement("li");
+        li.textContent = activityName;
+        activityList.appendChild(li);
+
+        // Enable drag-and-drop reordering
+        new Sortable(activityList, {
+            animation: 150,
+            onEnd: function(evt) {
+                saveItinerary();
+            }
+        });
+
+        saveItinerary();
     }
 }
+
+// Save itinerary to localStorage
+function saveItinerary() {
+    const itinerary = {};
+    document.querySelectorAll('.day').forEach(day => {
+        const dayId = day.id;
+        const activities = [];
+        const activityList = day.querySelector('.activity-list');
+        activityList.querySelectorAll('li').forEach(activity => {
+            activities.push(activity.textContent);
+        });
+        itinerary[dayId] = activities;
+    });
+
+    localStorage.setItem('itinerary', JSON.stringify(itinerary));
+}
+
+// Load saved itinerary from localStorage
+function loadItinerary() {
+    const savedItinerary = JSON.parse(localStorage.getItem('itinerary')) || {};
+
+    Object.keys(savedItinerary).forEach(dayId => {
+        const activityList = document.getElementById(`activity-list-${dayId}`);
+        savedItinerary[dayId].forEach(activity => {
+            const li = document.createElement("li");
+            li.textContent = activity;
+            activityList.appendChild(li);
+        });
+
+        // Enable drag-and-drop reordering
+        new Sortable(activityList, {
+            animation: 150,
+            onEnd: function(evt) {
+                saveItinerary();
+            }
+        });
+    });
+}
+
+// Initialize the page by loading the saved itinerary
+window.onload = loadItinerary;
 
 // Weather Widget (fetches weather from OpenWeather)
 function getWeather() {
-    const apiKey = 'YOUR_API_KEY';  // Replace with your OpenWeather API key
+    const apiKey = '950b1bc75181e9ddcfbadc7b5f89da24';  // Replace with your OpenWeather API key
     const weatherAPI = `https://api.openweathermap.org/data/2.5/onecall?lat=36.1699&lon=-115.1398&exclude=minutely&appid=${apiKey}&units=imperial`; // Use 'imperial' for Fahrenheit, 'metric' for Celsius
 
     fetch(weatherAPI)
@@ -94,147 +131,3 @@ function getWeather() {
 }
 
 getWeather();
-
-// Function to reset the entire itinerary
-function resetItinerary() {
-    document.getElementById('confirmPopup').style.display = 'flex';  // Show confirmation popup
-}
-
-// Confirm reset action
-function confirmReset() {
-    localStorage.removeItem('itinerary'); // Remove itinerary from localStorage
-    location.reload(); // Reload the page to reflect changes
-    closePopup(); // Close the popup after confirming
-}
-
-// Close the popup
-function closePopup() {
-    document.getElementById('confirmPopup').style.display = 'none'; // Hide the popup
-}
-
-// Save the itinerary to LocalStorage
-function saveItinerary() {
-    let itinerary = {};
-
-    // Loop through each day and get the activities
-    document.querySelectorAll('.day').forEach(day => {
-        let activities = [];
-        day.querySelectorAll('li').forEach(li => {
-            let activityText = li.textContent.trim();
-            // Only add unique activities
-            if (!activities.includes(activityText)) {
-                activities.push(activityText);
-            }
-        });
-        itinerary[day.id] = activities;
-    });
-
-    // Clear the existing saved itinerary before saving the new one
-    localStorage.setItem('itinerary', JSON.stringify(itinerary));
-
-    // Display the saved itinerary after it's saved
-    displayItinerary();
-}
-
-// Display saved itinerary on page load
-function displayItinerary() {
-    let savedItinerary = JSON.parse(localStorage.getItem('itinerary'));
-    if (savedItinerary) {
-        for (let dayId in savedItinerary) {
-            let day = document.getElementById(dayId);
-            let activityList = day.querySelector('.activity-list');
-            
-            // Clear existing activities to avoid duplicates
-            activityList.innerHTML = ''; // Clear the list before appending new activities
-            
-            savedItinerary[dayId].forEach(activity => {
-                let li = document.createElement('li');
-                li.textContent = activity;
-                activityList.appendChild(li);
-            });
-        }
-    }
-}
-
-// Add activity to list on Enter or comma
-document.querySelectorAll('input').forEach(input => {
-    input.addEventListener('keydown', function(event) {
-        if (event.key === 'Enter' || event.key === ',') { // Only "Enter" and "," are considered
-            event.preventDefault(); // Prevent default action
-            addActivityToItinerary(input);
-        }
-    });
-});
-
-// Add the activity to the day's list
-function addActivityToItinerary(input) {
-    let activity = input.value.trim();
-    if (activity) {
-        let day = input.closest('.day');
-        let activityList = day.querySelector('.activity-list');
-
-        // Check if the activity already exists in the list to avoid duplication
-        let activityExists = Array.from(activityList.children).some(li => li.textContent.trim() === activity);
-        if (!activityExists) {
-            // Create new list item for the activity
-            let li = document.createElement('li');
-            li.textContent = activity;
-            activityList.appendChild(li);
-        }
-
-        // Clear the input field
-        input.value = '';
-
-        // Update the order in LocalStorage
-        updateActivityOrder(day.id);
-    }
-}
-
-// Update the activity order in LocalStorage after reordering
-function updateActivityOrder(dayId) {
-    let activities = [];
-    const day = document.getElementById(dayId);
-    const activityList = day.querySelector('.activity-list');
-    
-    // Loop through the list and get the text content of each activity
-    activityList.querySelectorAll('li').forEach(li => {
-        activities.push(li.textContent.trim());
-    });
-
-    // Update the day's activity list in localStorage
-    let savedItinerary = JSON.parse(localStorage.getItem('itinerary')) || {};
-    savedItinerary[dayId] = activities;
-
-    // Save the updated itinerary back to localStorage
-    localStorage.setItem('itinerary', JSON.stringify(savedItinerary));
-}
-
-// Drag and drop reordering
-let sortableLists = document.querySelectorAll('.activity-list');
-sortableLists.forEach(list => {
-    new Sortable(list, {
-        animation: 150,
-        onEnd: function(evt) {
-            updateActivityOrder(evt.from.id); // Save the new order after drag
-        }
-    });
-});
-
-
-// Dropdown Menu Style Update (theme-aware)
-document.getElementById('activityFilter').addEventListener('change', function() {
-    const theme = document.body.classList.contains('dark-mode') ? 'dark' : 'light';
-    const selectElement = this;
-    if (theme === 'dark') {
-        selectElement.style.backgroundColor = '#333';
-        selectElement.style.color = '#fff';
-    } else {
-        selectElement.style.backgroundColor = '#fff';
-        selectElement.style.color = '#333';
-    }
-});
-
-
-
-
-
