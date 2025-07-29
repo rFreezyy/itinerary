@@ -1,6 +1,6 @@
 // Weather Widget (fetches weather from OpenWeather)
 function getWeather() {
-    const apiKey = '2403c65e7a99e471d625cb15b5ca7a59';  // Replace with your OpenWeather API key
+    const apiKey = 'YOUR_API_KEY';  // Replace with your OpenWeather API key
     const weatherAPI = `https://api.openweathermap.org/data/2.5/onecall?lat=36.1699&lon=-115.1398&exclude=minutely&appid=${apiKey}&units=imperial`; // Use 'imperial' for Fahrenheit, 'metric' for Celsius
 
     fetch(weatherAPI)
@@ -171,4 +171,5 @@ function updateActivityOrder(dayId) {
     // Save the updated itinerary back to localStorage
     localStorage.setItem('itinerary', JSON.stringify(savedItinerary));
 }
+
 
