@@ -1,0 +1,82 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Las Vegas Trip Itinerary</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jsPDF/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.14.0/Sortable.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>Las Vegas Trip Itinerary</h1>
+        <p>August 14 - August 18</p>
+
+        <!-- Countdown Timer -->
+        <div id="countdown"></div>
+
+        <!-- Theme Toggle -->
+        <button id="themeToggle">Switch to Dark Mode</button>
+
+        <!-- Activity Categories -->
+        <select id="activityFilter">
+            <option value="all">All</option>
+            <option value="restaurants">Restaurants</option>
+            <option value="sightseeing">Sightseeing</option>
+            <option value="entertainment">Entertainment</option>
+        </select>
+
+        <!-- Itinerary -->
+        <div class="itinerary">
+            <div class="day" id="thursday">
+                <h3>Thursday, August 14</h3>
+                <input type="text" id="input-thursday" placeholder="Add activity...">
+                <ul class="activity-list"></ul>
+            </div>
+            <div class="day" id="friday">
+                <h3>Friday, August 15</h3>
+                <input type="text" id="input-friday" placeholder="Add activity...">
+                <ul class="activity-list"></ul>
+            </div>
+            <div class="day" id="saturday">
+                <h3>Saturday, August 16</h3>
+                <input type="text" id="input-saturday" placeholder="Add activity...">
+                <ul class="activity-list"></ul>
+            </div>
+            <div class="day" id="sunday">
+                <h3>Sunday, August 17</h3>
+                <input type="text" id="input-sunday" placeholder="Add activity...">
+                <ul class="activity-list"></ul>
+            </div>
+            <div class="day" id="monday">
+                <h3>Monday, August 18</h3>
+                <input type="text" id="input-monday" placeholder="Add activity...">
+                <ul class="activity-list"></ul>
+            </div>
+        </div>
+
+        <button onclick="saveItinerary()">Save Itinerary</button>
+        <button onclick="exportToPDF()">Export to PDF</button>
+        <button onclick="resetItinerary()">Reset Itinerary</button>
+
+        <div id="savedItinerary"></div>
+    </div>
+
+    <!-- Weather Widget (on the side) -->
+    <div id="weatherWidget" class="weather-widget"></div>
+
+    <!-- Confirmation Popup -->
+    <div id="confirmPopup" class="popup">
+        <div class="popup-content">
+            <p>Are you sure you want to reset the entire itinerary?</p>
+            <button onclick="confirmReset()">Yes</button>
+            <button onclick="closePopup()">No</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

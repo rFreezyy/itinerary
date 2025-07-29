@@ -1,0 +1,147 @@
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 20px;
+    color: #333;
+    display: flex;
+}
+
+.container {
+    max-width: 600px;
+    margin: 0 auto;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    flex: 1;
+}
+
+h1 {
+    text-align: center;
+    color: #333;
+}
+
+button {
+    padding: 10px;
+    margin-top: 10px;
+    background-color: #333;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+}
+
+button:hover {
+    background-color: #555;
+}
+
+#countdown {
+    font-size: 20px;
+    color: green;
+    font-weight: bold;
+}
+
+.day {
+    margin-bottom: 20px;
+}
+
+.day input {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+#activityFilter {
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+}
+
+#themeToggle {
+    margin-top: 10px;
+    background-color: #444;
+}
+
+/* Dark Mode Styles */
+.dark-mode {
+    background-color: #121212;
+    color: #e0e0e0;
+}
+
+.dark-mode .container {
+    background-color: #333;
+}
+
+.dark-mode button {
+    background-color: #555;
+}
+
+/* Weather Widget (to the right) */
+.weather-widget {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    width: 280px;
+    padding: 15px;
+    background-color: #333;
+    color: white;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    font-family: Arial, sans-serif;
+}
+
+.weather-widget h3 {
+    font-size: 18px;
+    margin: 0;
+}
+
+.weather-widget .temp {
+    font-size: 32px;
+    font-weight: bold;
+}
+
+.weather-widget .hourly {
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.weather-widget .hourly .hour {
+    display: inline-block;
+    width: 40px;
+    text-align: center;
+    margin: 0 5px;
+}
+
+.weather-widget .hourly .hour img {
+    width: 24px;
+}
+
+.weather-widget .daily {
+    margin-top: 20px;
+}
+
+.weather-widget .daily .day {
+    margin-bottom: 10px;
+}
+
+.weather-widget .daily .day img {
+    width: 30px;
+}
+
+.weather-widget .daily .day p {
+    margin: 5px 0;
+}
+
+.weather-widget .daily .day strong {
+    font-size: 14px;
+}
+
+.weather-widget .daily .day p:last-child {
+    font-size: 12px;
+}
